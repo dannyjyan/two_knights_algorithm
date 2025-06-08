@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def min_knight_capture_with_paths(startA, startB):
     MOVES = [(-2, 1), (-1, 2), (1, 2), (2, 1),
              (2, -1), (1, -2), (-1, -2), (-2, -1)]
@@ -7,6 +8,12 @@ def min_knight_capture_with_paths(startA, startB):
     def neighbors(x, y):
         for dx, dy in MOVES:
             yield x + dx, y + dy
+
+    def in_bounds(x, y, N):
+        return 0 <= x < N and 0 <= y < N
+    
+    N = 8 # SIZE OF BOARD
+
 
     # visitedA and visitedB just track that we've seen that square
     visitedA = set([tuple(startA)])
@@ -25,6 +32,8 @@ def min_knight_capture_with_paths(startA, startB):
         for (x, y), path in frontierA.items():
             for nx, ny in neighbors(x, y):
                 pos = (nx, ny)
+                if not in_bounds(nx, ny, N):
+                    continue
                 if pos not in visitedA:
                     visitedA.add(pos)
                     nextA[pos] = path + [pos]
@@ -40,6 +49,8 @@ def min_knight_capture_with_paths(startA, startB):
         for (x, y), path in frontierB.items():
             for nx, ny in neighbors(x, y):
                 pos = (nx, ny)
+                if not in_bounds(nx, ny, N):
+                    continue
                 if pos not in visitedB:
                     visitedB.add(pos)
                     nextB[pos] = path + [pos]
