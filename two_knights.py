@@ -27,7 +27,7 @@ def min_knight_capture_with_paths(startA, startB):
     while frontierA and frontierB:
         turn += 1
 
-        # 1. Expand A one move
+        # 1a. Expand A one move
         nextA = {}
         for (x, y), path in frontierA.items():
             for nx, ny in neighbors(x, y):
@@ -38,13 +38,13 @@ def min_knight_capture_with_paths(startA, startB):
                     visitedA.add(pos)
                     nextA[pos] = path + [pos]
 
-        # 1a. Check if A has captured B by landing on B's old squares
+        # 1b. Check if A has captured B by landing on B's old squares
         for pos, pathA in nextA.items():
             if pos in frontierB:        # B was here at the start of the turn
                 pathB = frontierB[pos]   # B's path to pos (no extra move)
                 return turn, pathA, pathB
 
-        # 2. Expand B one move
+        # 2a. Expand B one move
         nextB = {}
         for (x, y), path in frontierB.items():
             for nx, ny in neighbors(x, y):
